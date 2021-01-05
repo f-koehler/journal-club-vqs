@@ -1,4 +1,4 @@
-journal-club-vqs.pdf: journal-club-vqs.md pandoc.yml header.tex graph.svg
+journal-club-vqs.pdf: journal-club-vqs.md pandoc.yml header.tex literature.bib graph.svg
 	pandoc \
 		--standalone \
 		--to=revealjs \
