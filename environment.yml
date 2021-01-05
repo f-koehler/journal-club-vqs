@@ -6,11 +6,14 @@ dependencies:
 - black
 - flake8
 - grove
-- jedi
+- ipympl
+- jedi[version='<0.18']
 - jupyter
+- jupyterlab
 - matplotlib
 - mkl
 - mypy
+- nodejs
 - numpy
 - pylint
 - pyquil
