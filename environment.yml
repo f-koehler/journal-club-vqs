@@ -1,0 +1,18 @@
+channels:
+- conda-forge
+- defaults
+dependencies:
+- bandit
+- black
+- flake8
+- grove
+- jedi
+- jupyter
+- matplotlib
+- mkl
+- mypy
+- numpy
+- pylint
+- pyquil
+- python
+name: jc_vqs
