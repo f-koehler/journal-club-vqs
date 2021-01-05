@@ -14,6 +14,9 @@ dependencies:
 - mypy
 - nodejs
 - numpy
+- pip
 - pylint
 - python
+- pip:
+  - qiskit[visualization]
 name: jc_vqs
