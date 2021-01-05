@@ -9,3 +9,7 @@ repos:
   hooks:
     - id: conda-env-store
     - id: conda-env-update
+- repo: https://github.com/kynan/nbstripout
+  rev: 0.3.9
+  hooks:
+    - id: nbstripout

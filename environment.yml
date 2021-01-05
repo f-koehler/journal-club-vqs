@@ -5,7 +5,6 @@ dependencies:
 - bandit
 - black
 - flake8
-- grove
 - ipympl
 - jedi[version='<0.18']
 - jupyter
@@ -16,6 +15,5 @@ dependencies:
 - nodejs
 - numpy
 - pylint
-- pyquil
 - python
 name: jc_vqs
