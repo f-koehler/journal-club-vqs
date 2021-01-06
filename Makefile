@@ -1,12 +1,15 @@
-journal-club-vqs.pdf: journal-club-vqs.md pandoc.yml header.tex literature.bib graph.svg
+journal-club-vqs.pdf: journal-club-vqs.md header.tex literature.bib graph.svg circuit.svg
 	pandoc \
 		--standalone \
 		--to=revealjs \
 		--output=journal-club-vqs.pdf \
-		--from=markdown_mmd+tex_math_dollars+citations+fenced_divs \
+		--from=markdown+tex_math_dollars+citations \
 		--to=beamer \
 		--citeproc \
 		--variable=theme:metropolis \
 		--include-in-header header.tex \
-		pandoc.yml \
 		journal-club-vqs.md
+
+.PHONY: clean
+clean:
+	rm -f journal-club-vqs.pdf

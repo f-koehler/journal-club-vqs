@@ -1,10 +1,10 @@
-Title: Journal Club - Variational Quantum Simulation
-Date: 2020-11-10 14:50
-Modified: 2020-11-10 14:50
-Slug: 2020-journal-club-vqs
-Summary: A presentation on the topic of variational quantum simulation
-Tags: Physics, Quantum Computing
-Category: Physics
+---
+title: Journal Club - Variational Quantum Simulation
+author: Fabian Köhler
+date: 14 January 2021
+abstract: A brief overview over variational quantum simulation
+bibliography: literature.bib
+---
 
 
 ### Combinatorial Optimization Problems
@@ -46,4 +46,26 @@ Literature [@moll2018]
 2. obtain Ising Hamiltonian using $z_i\to {\sigma}_i^{z}$ (neglecting constant term, the linear terms cancel each other):
    $$H_{\mathrm{I}}=-\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
 3. Max-Cut Problem is equivalent to finding the ground state of
-   $$H_{\mathrm{MC}}=\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
+   $$H_{\mathrm{MC}}=\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
+
+
+### Circuit
+
+![Circuit](circuit.svg)
+
+### Test
+
+$$RY(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{y}\right)=
+  \begin{pmatrix}
+    \cos\left(\sfrac{\theta}{2}\right) & -\sin\left(\sfrac{\theta}{2}\right) \\
+    \sin\left(\sfrac{\theta}{2}\right) & \cos\left(\sfrac{\theta}{2}\right)
+  \end{pmatrix}
+$$
+$$CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
+  \begin{pmatrix}
+    1 &   &   &    \\
+      & 1 &   &    \\
+      &   & 1 &    \\
+      &   &   & -1
+  \end{pmatrix}
+$$
