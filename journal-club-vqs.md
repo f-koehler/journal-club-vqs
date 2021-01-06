@@ -8,8 +8,14 @@ bibliography: literature.bib
 
 ### VQE
 
-![Sketch of the VQE algorithm](sketch.svg)
+![Sketch of the VQE algorithm](sketch.svg){ height=70% }
 
+### test
+
+![Typical quantum circuit comprising single qubit gates $U_{i,j}(\vec{\theta})$ and entanglers $U_{\mathrm{ent}}$. $d$ is called the depth of the circuit.](structure.svg){ height=50% }
+
+
+# Classical
 
 ### Combinatorial Optimization Problems
 
@@ -55,7 +61,7 @@ Literature [@moll2018]
 
 ### Circuit
 
-![Circuit](circuit.svg)
+![$d=3$-Circuit used to solve the Max-Cut Problem](circuit.svg)
 
 ### Test
 
@@ -75,3 +81,5 @@ CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
       &   &   & -1
   \end{pmatrix}
 $$
+
+### References
