@@ -6,6 +6,10 @@ abstract: A brief overview over variational quantum simulation
 bibliography: literature.bib
 ---
 
+### VQE
+
+![Sketch of the VQE algorithm](sketch.svg)
+
 
 ### Combinatorial Optimization Problems
 
@@ -55,13 +59,15 @@ Literature [@moll2018]
 
 ### Test
 
-$$RY(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{y}\right)=
+$$
+RY(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{y}\right)=
   \begin{pmatrix}
     \cos\left(\sfrac{\theta}{2}\right) & -\sin\left(\sfrac{\theta}{2}\right) \\
     \sin\left(\sfrac{\theta}{2}\right) & \cos\left(\sfrac{\theta}{2}\right)
   \end{pmatrix}
 $$
-$$CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
+$$
+CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
   \begin{pmatrix}
     1 &   &   &    \\
       & 1 &   &    \\
