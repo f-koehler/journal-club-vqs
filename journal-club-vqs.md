@@ -33,10 +33,9 @@ What is VQE?
 * lattice gauge theories [@paulson2020]
 * classical optimization problems [@farhi2014]
 
+# Max-Cut Problem
 
-# Classical Problems
-
-### Max-Cut Problem: Statement
+### Problem Statement
 
 > Given a weighted graph $G$, find the maximum cut.
 
@@ -53,12 +52,11 @@ This problem is known to be:
 
 Literature [@moll2018]
 
+### Example
 
-### Max-Cut Problem: Example
+![Graph](max_cut_visualization.svg){ height=90% }
 
-![Graph](graph.svg)
-
-### Max-Cut Problem: Spin-$\sfrac{1}{2}$-Hamiltonian
+### Spin-$\sfrac{1}{2}$-Hamiltonian
 
 [@lucas2013]
 
@@ -69,6 +67,35 @@ Literature [@moll2018]
 3. Max-Cut Problem is equivalent to finding the ground state of
    $$H_{\mathrm{MC}}=\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
 
+
+# Quantum Approximate Optimization Algorithm
+
+### Convergence (Ideal)
+
+![Convergence of the expecation value towards the exact value on an ideal quantum computer](convergence_max_cut_qaoa_ideal.svg){ height=70% }
+
+### Convergence (Noisy)
+
+![Evolution of the expecation value on a noisy quantum computer](convergence_max_cut_qaoa_noisy.svg){ height=70% }
+
+### QAOA Circuit
+
+![Exemplary QAOA circuit](circuit_qaoa.svg){ height=80% }
+
+### QAOA Circuit
+
+Problem: the QAOA ansatz generates a lot of gate operations:
+
+* single-qubit (76x):
+  * Hadamard (4x)
+  * RZ (40x)
+  * RX (32x)
+* two-qubit (80x): CX gate
+
+$\Rightarrow$ large accumulated gate error
+(especially due to the two-qubit gates which often have one order of magnitude larger errors)
+
+# VQE with ad hoc Ansatz
 
 ### Circuit
 

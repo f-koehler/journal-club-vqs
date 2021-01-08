@@ -16,9 +16,8 @@ dependencies:
 - numpy
 - pip
 - pylint
-- python==3.8
+- python
 - pip:
   - qiskit[visualization]
-  - qiskit-aer-gpu
   - jblack
 name: jc_vqs

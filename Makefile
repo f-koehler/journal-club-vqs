@@ -1,4 +1,4 @@
-journal-club-vqs.pdf: journal-club-vqs.md header.tex literature.bib graph.svg circuit.svg
+journal-club-vqs.pdf: journal-club-vqs.md header.tex literature.bib $(wildcard *.svg)
 	pandoc \
 		--standalone \
 		--to=revealjs \
