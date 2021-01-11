@@ -9,12 +9,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   height="380.11789pt"
+   height="378.99307pt"
    version="1.1"
-   viewBox="0 0 535.16206 380.11788"
-   width="535.16205pt"
+   viewBox="0 0 534.03724 378.99306"
+   width="534.03723pt"
    id="svg180"
-   sodipodi:docname="graph.svg"
+   sodipodi:docname="max_cut_visualization.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -40,8 +40,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid1776"
-       originx="-10.567984"
-       originy="-8.5758985" />
+       originx="-10.567985"
+       originy="-8.5758984" />
   </sodipodi:namedview>
   <metadata
      id="metadata2">
@@ -1091,7 +1091,7 @@
     </clipPath>
   </defs>
   <rect
-     style="fill:#1f78b4;fill-opacity:0.11073656;stroke:#1f78b4;stroke-width:2.25000003;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#1f78b4;fill-opacity:0.110737;stroke:#1f78b4;stroke-width:2.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect5760"
      width="244.20128"
      height="183.92461"
@@ -2294,7 +2294,7 @@
   </g>
   <g
      id="g4238"
-     transform="translate(-14.779146,-7.8943341)">
+     transform="translate(-14.779146,-7.8943344)">
     <path
        style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1"
        d="m 359.44284,368.98102 c 0,0 30,-22.5 30,-60 0,-37.5 -7.50001,-45 -7.5,-67.5 0,-11.25 11.0931,-29.87981 26.0931,-29.87981 15,0 22.65689,11.12981 25.59749,29.58179 2.63932,16.56152 -6.4964,45.2981 -6.60269,67.87625 -0.0879,18.67177 14.91209,52.42177 22.41209,59.92177"
@@ -2308,7 +2308,7 @@
   </g>
   <g
      id="g4242"
-     transform="translate(-7.4398125,-4.8009518)">
+     transform="translate(-7.4398128,-4.8009521)">
     <path
        style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 3;stroke-dashoffset:0;stroke-opacity:1"
        d="m 305.94387,34.68588 c 0,0 33.75001,7.500001 33.75001,41.250001 0,33.749999 -37.50001,37.499999 -37.50001,37.499999"
