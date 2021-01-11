@@ -18,6 +18,20 @@ What is VQE?
 * initially proposed to solve quantum chemistry problems [@peruzzo2014]
 * makes even small quantum systems useful in conjunction with classical routines
 
+How does it work?
+
+1. prepares a trial state $\ket{\Psi}$ on a quantum computer using a parametric circuit $U(\vec{theta})$
+2. evaluate cost function (expectation value) on qunatum computer
+3. optimize $\vec{\Theta}$ using a classical computer
+4. repeat until converged
+
+### Applications
+
+* quantum chemistry [@peruzzo2014; @mcclean2016]
+* quantum magnets [@kandala2017]
+* lattice gauge theories [@paulson2020]
+* classical optimization problems [@farhi2014]
+
 ### Sketch of the Algorithm
 
 ![Sketch of the VQE algorithm](sketch.svg){ height=70% }
@@ -26,12 +40,21 @@ What is VQE?
 
 ![Typical quantum circuit comprising single qubit gates $U_{i,j}(\vec{\theta})$ and entanglers $U_{\mathrm{ent}}$. $d$ is called the depth of the circuit.](structure.svg){ height=50% }
 
-### Applications
+### Entanglers
 
-* quantum chemistry [@peruzzo2014; @mcclean2016]
-* quantum magnets [@kandala2017]
-* lattice gauge theories [@paulson2020]
-* classical optimization problems [@farhi2014]
+Typical entanglement operators are built from two-qubit gates:
+
+![Some typical entanglers built from the $\mathrm{CX}$ (or $\mathrm{CX}$) gate](entanglers.svg){ height=70% }
+
+### Trial Wave Function
+
+$$
+  U_j(\theta)=\bigotimes\limits_{i=1}^{N}U_{i,j}(\vec{\theta})
+$$
+
+$$
+  \ket{\Psi(\theta)}=\left[\prod\limits_{j=1}^{N} U_j(\vec{\Theta}) U_{\mathrm{ent}}\right]U_0\ket{\vec{0}}
+$$
 
 # Max-Cut Problem
 
@@ -93,7 +116,7 @@ Problem: the QAOA ansatz generates a lot of gate operations:
 * two-qubit (80x): CX gate
 
 $\Rightarrow$ large accumulated gate error
-(especially due to the two-qubit gates which often have one order of magnitude larger errors)
+(especially due to the two-qubit gates)
 
 # VQE with ad hoc Ansatz
 

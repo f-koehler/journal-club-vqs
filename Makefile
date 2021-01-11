@@ -8,6 +8,7 @@ journal-club-vqs.pdf: journal-club-vqs.md header.tex literature.bib $(wildcard *
 		--citeproc \
 		--variable=theme:metropolis \
 		--include-in-header header.tex \
+		--pdf-engine=lualatex \
 		journal-club-vqs.md
 
 .PHONY: clean
