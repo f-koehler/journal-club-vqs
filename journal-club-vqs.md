@@ -14,18 +14,20 @@ toc: true
 What is VQE?
 
 * variational hybrid quantum-classical algorithm
-* aims to solve eigenvalue
+* aims to solve eigenvalue problems
 * initially proposed to solve quantum chemistry problems [@peruzzo2014]
 * makes even small quantum systems useful in conjunction with classical routines
 
 How does it work?
 
-1. prepares a trial state $\ket{\Psi}$ on a quantum computer using a parametric circuit $U(\vec{theta})$
+1. prepares a trial state $\ket{\Psi(\vec{\theta})}$ on a quantum computer using a parametric circuit $U(\vec{\theta})$
 2. evaluate cost function (expectation value) on qunatum computer
 3. optimize $\vec{\Theta}$ using a classical computer
 4. repeat until converged
 
 ### Applications
+
+Applications so far include:
 
 * quantum chemistry [@peruzzo2014; @mcclean2016]
 * quantum magnets [@kandala2017]
@@ -40,21 +42,26 @@ How does it work?
 
 ![Typical quantum circuit comprising single qubit gates $U_{i,j}(\vec{\theta})$ and entanglers $U_{\mathrm{ent}}$. $d$ is called the depth of the circuit.](structure.svg){ height=50% }
 
+### Trial Wave Function
+
+* quantum computer is initialized in some state, e.g. $\ket{\vec{0}}=\ket{0,0,\ldots,0}$
+* layers of single-qubit gates and entanglement generators are applied alternatingly
+*
+
+With
+$$
+  U_j(\theta)=\bigotimes\limits_{i=1}^{N}U_{i,j}(\vec{\theta})
+$$
+the trial wave function reads:
+$$
+  \ket{\Psi(\theta)}=\left[\prod\limits_{j=1}^{N} U_j(\vec{\Theta}) U_{\mathrm{ent}}\right]U_0\ket{\vec{0}}
+$$
+
 ### Entanglers
 
 Typical entanglement operators are built from two-qubit gates:
 
 ![Some typical entanglers built from the $\mathrm{CX}$ (or $\mathrm{CX}$) gate](entanglers.svg){ height=70% }
-
-### Trial Wave Function
-
-$$
-  U_j(\theta)=\bigotimes\limits_{i=1}^{N}U_{i,j}(\vec{\theta})
-$$
-
-$$
-  \ket{\Psi(\theta)}=\left[\prod\limits_{j=1}^{N} U_j(\vec{\Theta}) U_{\mathrm{ent}}\right]U_0\ket{\vec{0}}
-$$
 
 # Max-Cut Problem
 
@@ -90,14 +97,27 @@ Literature [@moll2018]
 3. Max-Cut Problem is equivalent to finding the ground state of
    $$H_{\mathrm{MC}}=\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
 
+# Qiskit
+
+### Qiskit [@Qiskit]
+
+> Qiskit is an open source SDK for working with quantum computers at the level of pulses, circuits and application modules.
+
+\hfill ![](qiskit.svg){ height=4em }
+
+
+* Python library
+* allows to run quantum circuits on simulators (ideal and noisy including realistic noise models from actual hardware) and on a real quantum computer (**for free!**)
+* many ready-made models, circuits and quantum algorithms (Short, VQE, QAOA, machine, etc.)
+* allows to work on a very high level
 
 # Quantum Approximate Optimization Algorithm
 
-### Convergence (Ideal)
+### QAOA: Convergence (Ideal)
 
 ![Convergence of the expecation value towards the exact value on an ideal quantum computer](convergence_max_cut_qaoa_ideal.svg){ height=70% }
 
-### Convergence (Noisy)
+### QAOA: Convergence (Noisy)
 
 ![Evolution of the expecation value on a noisy quantum computer](convergence_max_cut_qaoa_noisy.svg){ height=70% }
 
@@ -142,5 +162,14 @@ CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
       &   &   & -1
   \end{pmatrix}
 $$
+
+
+### VQE: Convergence (Ideal)
+
+![Convergence of the expecation value towards the exact value on an ideal quantum computer](convergence_max_cut_vqe_ideal.svg){ height=70% }
+
+### VQE: Convergence (Noisy)
+
+![Evolution of the expecation value on a noisy quantum computer](convergence_max_cut_vqe_noisy.svg){ height=70% }
 
 ### References {.allowframebreaks}
