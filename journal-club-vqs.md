@@ -7,23 +7,23 @@ bibliography: literature.bib
 toc: true
 ---
 
-# What is VQE?
+# Overview
 
-### Overview
-
-What is VQE?
+### What is VQE?
 
 * variational hybrid quantum-classical algorithm
 * aims to solve eigenvalue problems
 * initially proposed to solve quantum chemistry problems [@peruzzo2014]
 * makes even small quantum systems useful in conjunction with classical routines
 
-How does it work?
+### How does it work?
 
 1. prepares a trial state $\ket{\Psi(\vec{\theta})}$ on a quantum computer using a parametric circuit $U(\vec{\theta})$
-2. evaluate cost function (expectation value) on qunatum computer
+2. evaluate cost function (expectation value) on quantum computer
 3. optimize $\vec{\Theta}$ using a classical computer
 4. repeat until converged
+
+After the optimal parameters $\vec{\theta}$ have been determined, one can measure the value of the cost function $\braket{\Psi(\theta)|H|\Psi(\theta)}$ and determine the eigenstate $\ket{\Psi(\theta)}$.
 
 ### Applications
 
@@ -45,8 +45,8 @@ Applications so far include:
 ### Trial Wave Function
 
 * quantum computer is initialized in some state, e.g. $\ket{\vec{0}}=\ket{0,0,\ldots,0}$
+* it might be useful to apply the Hadamard gate afterwards to get a superposition $\sfrac{1}{2}(\ket{0}+\ket{1})$
 * layers of single-qubit gates and entanglement generators are applied alternatingly
-*
 
 With
 $$
@@ -73,14 +73,14 @@ $\Leftrightarrow$ Partition vertices in two sets, such that the sum of edge
 weights between the sets becomes maximal.
 
 $\Leftrightarrow$ Maximize $C(\vec{x})=\sum\limits_{i,j}w_{i,j}x_i(1-x_j)$
-($w_{i j}$: weights, $x_i\in\lbrace 0,1\rbrace$ label)
+ with weights $w_{i j}$ and binary labels $x_i\in\lbrace 0,1\rbrace$ (maximum satisfiability problem)
 
 This problem is known to be:
 
 * NP-hard $\Rightarrow$ no polynomial time algorithm
 * NP-complete $\Rightarrow$ can be mapped to any other NP-complete problem
 
-Literature [@moll2018]
+Literature: [@moll2018]
 
 ### Example
 
@@ -88,7 +88,6 @@ Literature [@moll2018]
 
 ### Spin-$\sfrac{1}{2}$-Hamiltonian
 
-[@lucas2013]
 
 1. shift binary variables: $x_i\in\lbrace 0,1\rbrace \to z_i=1-2x_i\in\lbrace -1,1\rbrace$
    $$C(\vec{z})=-\frac{1}{4}\sum\limits_{i,j}w_{ij}z_i z_j+\underbrace{\frac{1}{4}\sum\limits_{i,j}w_{ij}(1+z_j-z_i)}_{\text{const.}}$$
@@ -96,6 +95,8 @@ Literature [@moll2018]
    $$H_{\mathrm{I}}=-\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
 3. Max-Cut Problem is equivalent to finding the ground state of
    $$H_{\mathrm{MC}}=\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
+
+List of Ising formulations of NP-complete problems: [@lucas2013] (includes all of Karp's 21 NP-complete problems [@karp1972])
 
 # Qiskit
 
@@ -115,61 +116,118 @@ Literature [@moll2018]
 
 ### QAOA: Convergence (Ideal)
 
-![Convergence of the expecation value towards the exact value on an ideal quantum computer](convergence_max_cut_qaoa_ideal.svg){ height=70% }
+![On an ideal quantum computer, the QAOA quickly converges towards the correct value](convergence_max_cut_qaoa_ideal.svg){ height=70% }
+
+### QAOA: Eigenstate (Ideal)
+
+![QAOA determines the eigenstate as a superposition of the correct states ($\ket{0110}$ and $\ket{1001}$) which are equivalent/degenerate.](eigenstate_max_cut_qaoa_ideal.svg){ height=70% }
 
 ### QAOA: Convergence (Noisy)
 
-![Evolution of the expecation value on a noisy quantum computer](convergence_max_cut_qaoa_noisy.svg){ height=70% }
+![When including a realistic noise model (based on actual hardware) the QAOA does not converge towards the correct value.](convergence_max_cut_qaoa_noisy.svg){ height=70% }
+
+### QAOA: Eigenstate (Noisy)
+
+![The eigenstate (determined by $1000$ shots) includes some noisy background. However, the correct states are still the most probable.](eigenstate_max_cut_qaoa_noisy.svg){ height=70% }
 
 ### QAOA Circuit
 
-![Exemplary QAOA circuit](circuit_qaoa.svg){ height=80% }
+![The QAOA generates quite a lot of gate operations.](circuit_qaoa.svg){ height=80% }
 
 ### QAOA Circuit
 
-Problem: the QAOA ansatz generates a lot of gate operations:
+Problem: the QAOA ansatz generates $156$ gate operations:
 
 * single-qubit (76x):
   * Hadamard (4x)
   * RZ (40x)
   * RX (32x)
-* two-qubit (80x): CX gate
+* two-qubit (80x): CX gate (CNOT)
 
-$\Rightarrow$ large accumulated gate error
+$\Rightarrow$ large accumulated gate error due to imperfections/noise
 (especially due to the two-qubit gates)
+
+The ad hoc ansatz in the next section provides better results.
 
 # VQE with ad hoc Ansatz
 
 ### Circuit
 
-![$d=3$-Circuit used to solve the Max-Cut Problem](circuit.svg)
-
-### Test
-
-$$
-RY(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{y}\right)=
-  \begin{pmatrix}
-    \cos\left(\sfrac{\theta}{2}\right) & -\sin\left(\sfrac{\theta}{2}\right) \\
-    \sin\left(\sfrac{\theta}{2}\right) & \cos\left(\sfrac{\theta}{2}\right)
-  \end{pmatrix}
-$$
-$$
-CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
-  \begin{pmatrix}
-    1 &   &   &    \\
-      & 1 &   &    \\
-      &   & 1 &    \\
-      &   &   & -1
-  \end{pmatrix}
-$$
-
+![$d=3$-Circuit based on the $R_y(\theta)$ to solve the Max-Cut Problem. It has $N(d+1)=16$ parameters and uses the $CZ$ gate within a linear entanglement scheme.](circuit.svg)
 
 ### VQE: Convergence (Ideal)
 
-![Convergence of the expecation value towards the exact value on an ideal quantum computer](convergence_max_cut_vqe_ideal.svg){ height=70% }
+![On an ideal quantum computer our ad hoc ansatz converges quickly towards the optimal value.](convergence_max_cut_vqe_ideal.svg){ height=70% }
+
+### VQE: Eigenstate (Ideal)
+
+![This approach also provides the superosition of the correct states (albeit a different one).](eigenstate_max_cut_vqe_ideal.svg){ height=70% }
 
 ### VQE: Convergence (Noisy)
 
-![Evolution of the expecation value on a noisy quantum computer](convergence_max_cut_vqe_noisy.svg){ height=70% }
+![The ad hoc ansatz works much better on a noisy quantum computer due to the reduced number of gates.](convergence_max_cut_vqe_noisy.svg){ height=70% }
+
+### VQE: Eigenstate (Noisy)
+
+![There is almost no background noise when we measure with $1000$ shots.](eigenstate_max_cut_vqe_noisy.svg){ height=70% }
+
+# Outlook: Quantum Chemistry
+
+# Quantum Gates in This Presentation
+
+### Quantum Gates (Single-Qubit)
+
+Hadamard Gate:
+$$
+  H=\frac{1}{\sqrt{2}}\left(\sigma^x+\sigma^z\right)=\frac{1}{2}\begin{pmatrix}
+    1 &  1 \\
+    1 & -1
+  \end{pmatrix}
+$$
+
+Rotation around $x$ axis:
+$$
+  RX(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{x}\right)=
+    \begin{pmatrix}
+      \cos\left(\sfrac{\theta}{2}\right) & -i\sin\left(\sfrac{\theta}{2}\right) \\
+      -i\sin\left(\sfrac{\theta}{2}\right) & \cos\left(\sfrac{\theta}{2}\right)
+    \end{pmatrix}
+$$
+
+Rotation around $y$ axis:
+$$
+  RY(\theta)=\exp\left(-\frac{i}{2}\theta\sigma^{y}\right)=
+    \begin{pmatrix}
+      \cos\left(\sfrac{\theta}{2}\right) & -\sin\left(\sfrac{\theta}{2}\right) \\
+      \sin\left(\sfrac{\theta}{2}\right) & \cos\left(\sfrac{\theta}{2}\right)
+    \end{pmatrix}
+$$
+
+### Quantum Gates (Two-Qubit)
+Controlled $X$-gate (CNOT)
+$$
+CX=CNOT=I_{2\times 2}\otimes \ket{0}\bra{0}+\sigma^{x}\otimes\ket{1}\bra{1}=
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+  \end{pmatrix}
+$$
+
+Controlled $Z$-gate (CNOT)
+$$
+CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
+  \begin{pmatrix}
+    1 & 0 & 0 &  0 \\
+    0 & 1 & 0 &  0 \\
+    0 & 0 & 1 &  0 \\
+    0 & 0 & 0 & -1
+  \end{pmatrix}
+$$
+
+###{.plain}
+
+Thank you for your attention!
 
 ### References {.allowframebreaks}
