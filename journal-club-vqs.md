@@ -9,17 +9,18 @@ toc: true
 
 # Overview
 
-### What is VQE?
+### What is a VQE?
 
+* variational quantum eigen solver (VQE)
 * variational hybrid quantum-classical algorithm
-* aims to solve eigenvalue problems
+* aims to solve eigenvalue problems and optimization problems that can be formulated as such
 * initially proposed to solve quantum chemistry problems [@peruzzo2014]
 * makes even small quantum systems useful in conjunction with classical routines
 
 ### How does it work?
 
 1. prepares a trial state $\ket{\Psi(\vec{\theta})}$ on a quantum computer using a parametric circuit $U(\vec{\theta})$
-2. evaluate cost function (expectation value) on quantum computer
+2. evaluate cost function (expectation value) on the quantum computer
 3. optimize $\vec{\Theta}$ using a classical computer
 4. repeat until converged
 
@@ -59,9 +60,9 @@ $$
 
 ### Entanglers
 
-Typical entanglement operators are built from two-qubit gates:
+Typical entanglement operators are built using two-qubit gates:
 
-![Some typical entanglers built from the $\mathrm{CX}$ (or $\mathrm{CX}$) gate](entanglers.svg){ height=70% }
+![Some typical entanglers built using the $\mathrm{CNOT}$ (or $\mathrm{CX}$) gate](entanglers.svg){ height=70% }
 
 # Max-Cut Problem
 
@@ -88,7 +89,6 @@ Literature: [@moll2018]
 
 ### Spin-$\sfrac{1}{2}$-Hamiltonian
 
-
 1. shift binary variables: $x_i\in\lbrace 0,1\rbrace \to z_i=1-2x_i\in\lbrace -1,1\rbrace$
    $$C(\vec{z})=-\frac{1}{4}\sum\limits_{i,j}w_{ij}z_i z_j+\underbrace{\frac{1}{4}\sum\limits_{i,j}w_{ij}(1+z_j-z_i)}_{\text{const.}}$$
 2. obtain Ising Hamiltonian using $z_i\to {\sigma}_i^{z}$ (neglecting constant term, the linear terms cancel each other):
@@ -97,6 +97,17 @@ Literature: [@moll2018]
    $$H_{\mathrm{MC}}=\frac{1}{2}\sum\limits_{i<j}w_{ij}{\sigma}_i^{z}{\sigma}_j^{z}$$
 
 List of Ising formulations of NP-complete problems: [@lucas2013] (includes all of Karp's 21 NP-complete problems [@karp1972])
+
+### Trial Wave Function
+
+How to construct $\ket{\Psi(\vec{\theta})}$?
+
+* it is unclear how to construct the trial wave function for classical problems
+* the ansatz is usually developed heuristically
+* the choice of gates is arbitary as long each qubit has access to the whole Bloch sphere
+
+In quantum mechanical problems this is often much clearer.
+For electronic structure problems one could use the Jordan-Wigner or the Bravyi-Kitaev transformation to translate the usual methods (e.g. unitary coupled cluster) to pauli matrices.
 
 # Qiskit
 
@@ -112,7 +123,25 @@ List of Ising formulations of NP-complete problems: [@lucas2013] (includes all o
 * many ready-made models, circuits and quantum algorithms (Short, VQE, QAOA, machine, etc.)
 * allows to work on a very high level
 
-# Quantum Approximate Optimization Algorithm
+# Quantum Approximate Optimization Algorithm (QAOA)
+
+### Introduction
+
+Consider a $N$-dimensional satisfiability problem with $m$ clauses $C_i(\vec{z})$.
+The cost function reads
+$$
+  C(\vec{z})=\sum\limits_{i=1}^{m} C_i(\vec{z})
+$$
+with respect to $N$ binary labels
+$$
+  \vec{z}={\begin{pmatrix}z_1,z_2,\ldots,z_N\end{pmatrix}}^{\intercal}.
+$$
+
+QAOA [@farhi2014] is a heuristic approach controlled by an integer parameter $p\ge 1$ to generate the trial wave function:
+
+* quality of the approximation improves with increasing p
+* depth scales linearly $d\propto p m$
+* $2p$ optimization parameters
 
 ### QAOA: Convergence (Ideal)
 
@@ -171,8 +200,6 @@ The ad hoc ansatz in the next section provides better results.
 
 ![There is almost no background noise when we measure with $1000$ shots.](eigenstate_max_cut_vqe_noisy.svg){ height=70% }
 
-# Outlook: Quantum Chemistry
-
 # Quantum Gates in This Presentation
 
 ### Quantum Gates (Single-Qubit)
@@ -226,8 +253,10 @@ CZ=\ket{0}\bra{0}\otimes I_{2\times 2}+\ket{1}\bra{1}\sigma^{z}=
   \end{pmatrix}
 $$
 
-###{.plain}
+### {.plain}
 
-Thank you for your attention!
+**Thank you for your attention!**
+
+Code: [\faGithub{} https://github.com/f-koehler/journal-club-vqs](https://github.com/f-koehler/journal-club-vqs)
 
 ### References {.allowframebreaks}
